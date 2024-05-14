@@ -15,7 +15,7 @@ exports.sendOTP=async (req,res)=>{
 
     //check if user exists
 
-    const checkUserPresent=User.findOne({email});
+    const checkUserPresent= await User.findOne({email});
 
     if(checkUserPresent){
         return res.status(401).json({
@@ -36,7 +36,7 @@ exports.sendOTP=async (req,res)=>{
 
     //check for unique otp
 
-    const result =OTP.findOne({otp:otp});
+    const result =await OTP.findOne({otp:otp});
     
     
     //if true means we need to generate another otp
@@ -46,10 +46,10 @@ exports.sendOTP=async (req,res)=>{
             lowerCaseAlphabets:false,
             specialChars:false,
         });    
-        result =OTP.findOne({otp:otp});
+        
     }
 
-    const otpPayload={email,password};
+    const otpPayload={email,otp};
 
     //insert the entry in the OTP schema
 
@@ -64,7 +64,7 @@ exports.sendOTP=async (req,res)=>{
 
     }
     catch(err){
-        console.log(err);
+        console.log(err.message);
         res.status(500).json({
             success:false,
             message:"some error in otp generation and verification"
@@ -86,6 +86,7 @@ exports.signUp=async(req,res)=>{
             contactNumber,
             otp,
         } = req.body;
+        
         
         //validate data
         if ( !firstName || !lastName || !email || !password || !confirmPassword || !otp) {
@@ -116,6 +117,7 @@ exports.signUp=async(req,res)=>{
         //find most recent otp
         const recentOtp=await OTP.findOne({email}).sort({createdAt:-1}).limit(1);
         console.log(recentOtp);
+        
 
         //validate otp
         if(recentOtp.length==0){
@@ -124,13 +126,14 @@ exports.signUp=async(req,res)=>{
                 success: false,
                 message: "The OTP is not valid",
             });
-        }else if (otp !== recentOtp) {
+        }else if (otp !== recentOtp.otp) {
             // Invalid OTP
             return res.status(400).json({
               success: false,
               message: "The OTP is not valid",
             })
         }
+        
 
         //hash password
         const hashedPassword=await bcrypt.hash(password,10);
@@ -145,6 +148,7 @@ exports.signUp=async(req,res)=>{
 
         //create entry in db
 
+        console.log("Hey4");
         const user= await User.create({
             firstName,
             lastName,
@@ -156,19 +160,17 @@ exports.signUp=async(req,res)=>{
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/8.x/initials/svg?seed=${firstName} ${lastName}`,
         });
+        
 
         return res.status(200).json({
             success: true,
             user,
             message: "User registered successfully",
         });
-
-
-
     }
     
     catch(err){
-        console.error(error)
+        console.error(err.message)
         return res.status(500).json({
           success: false,
           message: "User cannot be registered. Please try again.",
