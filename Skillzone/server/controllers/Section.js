@@ -22,7 +22,7 @@ exports.createSection = async (req, res) => {
         });
 
         //update course with the objid of section
-        const updatedCourse=await Course.findByIdAndUpdate({courseId},{
+        const updatedCourse=await Course.findByIdAndUpdate(courseId,{
             $push:({
                 courseContent:newSection._id,
             })

@@ -1,6 +1,10 @@
 const Profile = require("../models/Profile")
+// const CourseProgress = require("../models/CourseProgress")
+const Course = require("../models/Course")
 const User = require("../models/User")
-
+const { uploadImageToCloudinary } = require("../utils/imageUploader")
+// const mongoose = require("mongoose")
+// const { convertSecondsToDuration } = require("../utils/secToDuration")
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
   try {
@@ -9,27 +13,27 @@ exports.updateProfile = async (req, res) => {
       lastName = "",
       dateOfBirth = "",
       about = "",
-      contactNumber,
-      gender,
+      contactNumber="",
+      gender="",
     } = req.body
     const id = req.user.id
 
 
     //validation
-    if (!contactNumber   || !gender) {
-        return res
-          .status(404)
-          .json({ success: false, message: "All Fields are Required" })
-    }
+    // if (!contactNumber   || !gender) {
+    //     return res
+    //       .status(404)
+    //       .json({ success: false, message: "All Fields are Required" })
+    // }
     // Find the profile by id
     const userDetails = await User.findById(id)
     const profile = await Profile.findById(userDetails.additionalDetails)
 
-    // const user = await User.findByIdAndUpdate(id, {
-    //   firstName,
-    //   lastName,
-    // })
-    // await user.save()
+    const user = await User.findByIdAndUpdate(id, {
+      firstName,
+      lastName,
+    })
+    await user.save()
 
     // Update the profile fields
     profile.dateOfBirth = dateOfBirth
@@ -181,5 +185,36 @@ exports.getEnrolledCourses = async (req, res) => {
     })
   }
 }
-
+exports.updateDisplayPicture = async (req, res) => {
+  try {
+    const displayPicture = req.files.displayPicture;
+    const userId = req.user.id;
+    
+    const image = await uploadImageToCloudinary(
+      displayPicture,
+      process.env.FOLDER_NAME,
+      2000,
+      2000
+    )
+    
+    console.log(image)
+    const updatedProfile = await User.findByIdAndUpdate(
+      { _id: userId },
+      { image: image.secure_url },
+      { new: true }
+    )
+    
+    res.send({
+      success: true,
+      message: `Image Updated successfully`,
+      data: updatedProfile,
+    })
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
   

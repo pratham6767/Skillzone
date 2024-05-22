@@ -34,7 +34,7 @@ exports.createSubSection = async (req, res) => {
             
         // Update the corresponding section with the newly created sub-section
         const updatedSection = await Section.findByIdAndUpdate(
-            { _id: sectionId },
+             sectionId ,
             { $push: { subSection: SubSectionDetails._id } },
             { new: true },
         ).populate("subSection")

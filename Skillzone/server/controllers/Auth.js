@@ -148,7 +148,7 @@ exports.signUp=async(req,res)=>{
 
         //create entry in db
 
-        console.log("Hey4");
+        
         const user= await User.create({
             firstName,
             lastName,
@@ -156,7 +156,7 @@ exports.signUp=async(req,res)=>{
             contactNumber,
             password: hashedPassword,
             accountType: accountType,
-            approved: approved,
+            // approved: approved,
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/8.x/initials/svg?seed=${firstName} ${lastName}`,
         });
@@ -207,7 +207,7 @@ exports.login = async (req, res) => {
 
         // Generate JWT token and Compare Password
         if (await bcrypt.compare(password, user.password)) {
-            const payload={ email: user.email, id: user._id, role: user.accountType };
+            const payload={ email: user.email, id: user._id, accountType: user.accountType };
             const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: "24h"});
 
             user.token=token;
