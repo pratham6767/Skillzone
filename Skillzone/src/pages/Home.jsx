@@ -9,20 +9,23 @@ import LearnLanguageSection from '../components/core/Homepage/LearnLanguageSecti
 import TimelineSection from '../components/core/Homepage/TimelineSection.jsx'
 import InstructorSection from '../components/core/Homepage/InstructorSection.jsx'
 import ReviewSlider from '../components/core/Homepage/ReviewSlider.jsx'
+import ExploreMore from '../components/core/Homepage/ExploreMore.jsx'
+
+
 
 const Home = () => {
   return (
     <div>
         {/* section 1 */}
-        <div className='mx-auto flex max-w-maxContent flex-col w-11/12 relative items-center'>
-            <Link to='/signup'>
+        <div className='relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white'>
+          <Link to='/signup'>
             <div className='mt-16 p-1 rounded-full mx-auto bg-richblack-800 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] font-bold text-richblack-200 transition-all duration-200 group hover:scale-95'>
                 <div className='flex flex-row mx-auto items-center group-hover:bg-richblack-900 gap-2 rounded-full px-10 py-[5px]'>
                     <p >Become an Instructor</p>
                     <FaArrowRight/>
                 </div>
             </div>
-            </Link>
+          </Link>
           <div className='text-center mx-auto text-4xl font-semibold mt-7'>
             Empower Your Future with
             <HighlightText text="Coding Skill"/>
@@ -108,7 +111,7 @@ const Home = () => {
             backgroundGradient={<div className="codeblock1 absolute"></div>}
           />
           </div>
-          
+          <ExploreMore />
         </div>
         {/* section 2 */}
         <div className='bg-pure-greys-5 text-richblack-700'>
