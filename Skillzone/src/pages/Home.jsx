@@ -10,8 +10,7 @@ import TimelineSection from '../components/core/Homepage/TimelineSection.jsx'
 import InstructorSection from '../components/core/Homepage/InstructorSection.jsx'
 import ReviewSlider from '../components/core/Homepage/ReviewSlider.jsx'
 import ExploreMore from '../components/core/Homepage/ExploreMore.jsx'
-
-
+import Footer from '../components/common/Footer.jsx'
 
 const Home = () => {
   return (
@@ -166,6 +165,7 @@ const Home = () => {
         <ReviewSlider />
         </div>
         {/* footer */}
+        <Footer/>
     </div>
   )
 }

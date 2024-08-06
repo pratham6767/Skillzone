@@ -120,7 +120,7 @@ exports.signUp=async(req,res)=>{
         
 
         //validate otp
-        if(recentOtp.length==0){
+        if(recentOtp.length===0){
             //otp not found
             return res.status(400).json({
                 success: false,
@@ -254,16 +254,9 @@ exports.changePassword = async (req, res) => {
       const userDetails = await User.findById(req.user.id)
   
       // Get old password, new password, and confirm new password from req.body
-      const { oldPassword, newPassword ,confirmPassword} = req.body
+      const { oldPassword, newPassword } = req.body
         
-      //check both pass are same or not
-      if (newPassword !== confirmPassword) {
-        return res.status(400).json({
-          success: false,
-          message:
-            "Password and Confirm Password do not match. Please try again.",
-        }); 
-    };
+      
       // Validate old password
       const isPasswordMatch = await bcrypt.compare(
         oldPassword,

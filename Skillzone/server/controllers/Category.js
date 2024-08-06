@@ -1,5 +1,7 @@
 const Category=require("../models/Category");
-
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max)
+}
 //create category handler function
 
 exports.createCategory = async (req, res) => {

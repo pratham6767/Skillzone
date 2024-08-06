@@ -39,7 +39,7 @@ exports.capturePayment = async (req, res) => {
               .json({ success: false, message: "Coudnt find the course  " })
         }
 
-        //check if user ia already enrolled in the course 
+        //check if user is already enrolled in the course 
         const uid=new mongoose.Types.ObjectId(userId);
         if (course.studentsEnrolled.includes(uid)) {
             return res
@@ -145,7 +145,7 @@ exports.verifySignature = async (req, res) => {
     }
 
     else{
-        console.log(error)
+      
       return res.status(400).json({ success: false,message:"invalid req" })
     }
 }

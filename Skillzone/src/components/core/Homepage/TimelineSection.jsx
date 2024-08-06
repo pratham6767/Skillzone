@@ -40,7 +40,7 @@ const TimelineSection = () => {
           TimeLine.map((element,index)=>{
             return(
               <div className='flex flex-col items-start'>
-                <div className='flex flex-row gap-6 ' key={index}>
+                <div className='flex flex-row gap-6 ' key={index +" "}>
 
 
                 <div className='w-[50px] h-[50px] rounded-full  bg-white flex items-center mx-auto'>
