@@ -10,11 +10,17 @@ const Dashboard = () => {
     const {loading:authLoading}=useSelector((state)=>state.auth);
     const {loading:profileLoading}=useSelector((state)=>state.profile);
     if (profileLoading || authLoading) {
-        return (
-          <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-            <div className="spinner"></div>
+      return (
+        <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+          <div className="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-        )
+        </div>
+      )
+      
     }
     
   return (

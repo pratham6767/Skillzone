@@ -39,6 +39,23 @@ export default function RequirementsField({
     setRequirementsList(updatedRequirements)
   }
 
+  const handleKeyDown = (event) => {
+    // Check if user presses "Enter" or ","
+    if (event.key === "Enter"|| event.key===",") {
+      // Prevent the default behavior of the event
+      event.preventDefault()
+      // Get the input value and remove any leading/trailing spaces
+      const requirement = event.target.value.trim()
+      // Check if the input value exists and is not already in the chips array
+      if (requirement && !requirementsList.includes(requirement)) {
+        // Add the chip to the array and clear the input
+        const newRequriments = [...requirementsList, requirement]
+        setRequirementsList(newRequriments)
+        setRequirement("")
+      }
+    }
+  }
+
   return (
     <div className="flex flex-col space-y-2">
       <label className="text-sm text-richblack-5" htmlFor={name}>
@@ -49,6 +66,7 @@ export default function RequirementsField({
           type="text"
           id={name}
           value={requirement}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setRequirement(e.target.value)}
           className="form-style w-full"
         />

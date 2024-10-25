@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast"
 
-import { updateCompletedLectures } from "../../slices/viewCourseSlice"
-// import { setLoading } from "../../slices/profileSlice";
+// import { updateCompletedLectures } from "../../slices/viewCourseSlice"
+import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from "../apis"
 
@@ -261,6 +261,12 @@ export const deleteSubSection = async (data, token) => {
 
 // fetching all courses under a specific instructor
 export const fetchInstructorCourses = async (token) => {
+  if (!token) {
+    console.error("No token provided for fetching instructor courses.");
+    toast.error("You must be logged in to view your courses.");
+    return [];
+  }
+
   let result = []
   const toastId = toast.loading("Loading...")
   try {

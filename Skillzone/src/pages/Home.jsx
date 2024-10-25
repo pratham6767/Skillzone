@@ -142,7 +142,7 @@ const Home = () => {
                 Get the skills you need for a <HighlightText text={'job that is in demand.'}/>
                 </div>
                 <div className='flex flex-col justify-between gap-10 w-[43%] items-start'>
-                  <p className='text-[16px]'>The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.</p>
+                  <p className='text-[16px]'>The modern SkillZone is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.</p>
                   <CTABUTTON active={true} linkto={"/signup"}>
                     Learn More
                   </CTABUTTON>
