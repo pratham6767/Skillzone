@@ -30,6 +30,7 @@ export default function CoursesTable({ courses, setCourses }) {
     setLoading(true)
     await deleteCourse({ courseId: courseId }, token)
     const result = await fetchInstructorCourses(token)
+    console.log(result);
     if (result) {
       setCourses(result)
     }
