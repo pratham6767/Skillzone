@@ -223,6 +223,56 @@ const VideoDetails = () => {
 
       <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>
       <p className="pt-2 pb-6">{videoData?.description}</p>
+
+      {/* AI Notes Section */}
+      {videoData?.aiNotes && (
+        <div className="mt-4 bg-richblack-800 p-6 rounded-lg">
+          <h2 className="text-2xl font-semibold text-yellow-50 mb-4">
+            Lecture Notes
+          </h2>
+          
+          {/* Parse and display the JSON notes */}
+          {(() => {
+            try {
+              const notes = JSON.parse(videoData.aiNotes);
+              return (
+                <div className="space-y-6">
+                  {/* Summary */}
+                  <div className="bg-richblack-900 p-4 rounded-lg">
+                    <h3 className="text-xl font-semibold text-yellow-50 mb-2">Summary</h3>
+                    <p className="text-richblack-5">{notes.summary}</p>
+                  </div>
+
+                  {/* Key Points */}
+                  <div className="bg-richblack-900 p-4 rounded-lg">
+                    <h3 className="text-xl font-semibold text-yellow-50 mb-2">Key Points</h3>
+                    <ul className="list-disc list-inside text-richblack-5 space-y-2">
+                      {notes.keyPoints.map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Detailed Notes */}
+                  <div className="bg-richblack-900 p-4 rounded-lg">
+                    <h3 className="text-xl font-semibold text-yellow-50 mb-2">Detailed Notes</h3>
+                    <div className="text-richblack-5 whitespace-pre-wrap">
+                      {notes.detailedNotes}
+                    </div>
+                  </div>
+                </div>
+              );
+            } catch (error) {
+              // Fallback for non-JSON notes
+              return (
+                <div className="bg-richblack-900 p-4 rounded-lg">
+                  <p className="text-richblack-5 whitespace-pre-wrap">{videoData.aiNotes}</p>
+                </div>
+              );
+            }
+          })()}
+        </div>
+      )}
     </div>
   );
 };
